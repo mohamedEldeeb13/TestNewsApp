@@ -23,13 +23,21 @@ struct ArticleCardView: View {
                            transaction: .init(animation: .bouncy(duration: 1))) { phase in
                     switch phase {
                     case .empty:
-                        placeHolder()
+                        ProgressView()
                     case .success(let image):
                         image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                     case .failure(let error):
-                        Text(error.localizedDescription)
+                          placeHolder()
+                            .overlay {
+                                Text(error.localizedDescription)
+                                    .foregroundStyle(.blue)
+                                    .bold()
+                                    .lineLimit(1)
+                            }
+                          
+                        
                     @unknown default:
                         EmptyView()
                     }
